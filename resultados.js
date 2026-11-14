@@ -86,7 +86,7 @@
               ? 'La clave de lectura no coincide. Revisa que CLAVE_LECTURA sea igual en config.js y en Codigo.gs.'
               : 'El Apps Script respondió con un error: ' + j.error);
           } else {
-            filasFuente = (j.filas || []).filter(function (f) { return !/^FICTICIA/i.test(f.id_participante); });
+            filasFuente = (j.filas || []).filter(function (f) { return !/^(FICTICIA|PRUEBA)/i.test(f.id_participante); });
             textoFuente = 'Fuente: Google Sheet · ' + filasFuente.length + ' respuestas · actualizado a las ' +
               new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }) + '.';
           }
@@ -461,7 +461,7 @@
       });
     });
     Promise.all(lecturas).then(function (res) {
-      var nuevas = [].concat.apply([], res).filter(function (f) { return demo || !/^FICTICIA/i.test(f.id_participante); });
+      var nuevas = [].concat.apply([], res).filter(function (f) { return demo || !/^(FICTICIA|PRUEBA)/i.test(f.id_participante); });
       filasRespaldo = filasRespaldo.concat(nuevas);
       combinar();
       $('#fuente').textContent += ' + ' + nuevas.length + ' de respaldos JSON.';
